@@ -24,7 +24,7 @@ export default function TodoItem({
           onClick={() => onDelete(id)}
           className="col-lg-1 col-md-1 w-auto col-sm-2 btn btn-danger btn-sm"
         >
-          <span className="fas fa-trash"></span>
+          <span className="fas fa-trash"> </span>
         </button>
       </div>
     </div>
