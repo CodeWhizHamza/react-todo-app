@@ -1,9 +1,9 @@
 import React from 'react'
 import TodoItem from './TodoItem'
 
-export default function TodoList({ todos, onComplete, onDelete }) {
+export default function TodoList({ todos, onComplete, onDelete, className }) {
   return (
-    <div className="px-5 mx-5">
+    <div className={className}>
       {todos.map(todo => (
         <TodoItem
           key={todo.id}

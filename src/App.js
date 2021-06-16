@@ -14,12 +14,7 @@ export default function App() {
   const [todos, setTodos] = useState([])
   const [renderTodo, setRenderTodo] = useState([])
 
-  useEffect(() => {
-    localStorage.getItem('todos') &&
-      setTodos(JSON.parse(localStorage.getItem('todos')))
-  }, [])
-
-  function onSubmit(e) {
+  const onSubmit = e => {
     e.preventDefault()
     const { value } = inputRef.current
     if (value === '') return
@@ -27,7 +22,7 @@ export default function App() {
     setTodos([...todos, { content: value, completed: false, id: v4() }])
     inputRef.current.value = null
   }
-  function handleComplete(id) {
+  const handleComplete = id => {
     let todosCopy = [...todos]
     const todo = toggleComplete(id, todosCopy)
     const index = getIndex(id, todos)
@@ -35,18 +30,18 @@ export default function App() {
 
     setTodos(todosCopy)
   }
-  function toggleComplete(id, todos) {
+  const toggleComplete = (id, todos) => {
     const todo = getItem(id, todos)
     todo.completed = !todo.completed
     return todo
   }
-  function getItem(id, todos) {
+  const getItem = (id, todos) => {
     return todos.find(todo => todo.id === id)
   }
-  function getIndex(id, todos) {
+  const getIndex = (id, todos) => {
     return todos.findIndex(todo => todo.id === id)
   }
-  function handleDelete(id) {
+  const handleDelete = id => {
     const todosCopy = [...todos]
     const index = getIndex(id, todosCopy)
     todosCopy.splice(index, 1)
@@ -60,22 +55,31 @@ export default function App() {
   }, [todos])
 
   useEffect(() => {
+    localStorage.getItem('todos') &&
+      setTodos(JSON.parse(localStorage.getItem('todos')))
+  }, [])
+
+  useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos))
     handleSelectChange()
   }, [todos, handleSelectChange])
 
   return (
     <div className="container p-4 bg-light">
+      <h1 className="text-center">Todo app</h1>
       <Form inputRef={inputRef} onSubmit={onSubmit} />
-      <div className="row w-50 mx-auto px-3 mb-4">
-        <Select
-          handleChange={handleSelectChange}
-          selectRef={selectRef}
-          className="form-control ml-auto w-50"
-        />
+      <div className="row">
+        <div className="row col-lg-6 col-md-8 col-sm-10 mx-auto mb-5">
+          <Select
+            handleChange={handleSelectChange}
+            selectRef={selectRef}
+            className="form-control ml-auto col-lg-4 col-md-4 col-sm-12"
+          />
+        </div>
       </div>
 
       <TodoList
+        className=""
         todos={renderTodo}
         onDelete={handleDelete}
         onComplete={handleComplete}
