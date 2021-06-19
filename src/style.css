@@ -1,5 +1,5 @@
 .break-word {
   overflow-wrap: break-word;
   word-break: break-word;
-  hypens: 
+  hyphens: auto;
 }
